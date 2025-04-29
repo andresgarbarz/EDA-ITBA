@@ -1,0 +1,1 @@
+prefixDir=C:/Users/andy/Documents/JavaProjects/EDA/src/main/resources/lucene
