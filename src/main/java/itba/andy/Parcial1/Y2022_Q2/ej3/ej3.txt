@@ -1,0 +1,12 @@
+Q: ¿Qué hace el algoritmo unalgoritmo en palabras y en una oración)? - por
+ejemplo: encuentra el elemento más pequeño en un arreglo.
+
+A: Retorna el número de veces que se repite el elemento que más se repite en un arreglo.
+
+Q: ¿Qué orden (O grande) de complejidad temporal tiene? ¿Qué orden (O
+   grande) de complejidad espacial tiene?
+
+A: Temporal: n*(n+1)/2 --> O(n^2)
+   Espacial: 1+1+1+1=4 --> O(1)
+
+Q:

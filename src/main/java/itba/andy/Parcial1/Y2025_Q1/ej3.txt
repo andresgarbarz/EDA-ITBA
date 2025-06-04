@@ -1,0 +1,11 @@
+3.1)
+queryString                              | Documentos obtenidos en la respuesta
+"content:IEDO~ AND content:[PI TO SOS] " | d.txt
+
+Explicación: El documento d.txt es el único que contiene un término que está a una distancia de 2 (default) en levenshtein de IEDO (fuzzy search) y una palabra que está entre PI y SOS lexicográficamente (inclusive).
+
+3.2)
+queryString                                                  | Documentos obtenidos en la respuesta
+"content:\"review game game,\" OR content:\",,store,,game\"" | a.txt
+
+Explicación: El documento a.txt es el único que matchea pues contiene "store,, game", matcheando con la segunda clausula del OR, ya que las comas que estan al inicio se ignoran. El resto de documentos no matchean con ninguna clausula del OR.

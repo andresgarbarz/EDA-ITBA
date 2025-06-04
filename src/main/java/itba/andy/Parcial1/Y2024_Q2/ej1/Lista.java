@@ -45,7 +45,8 @@ public class Lista {
 		}
 	}
 
-	// Complejidad: O(nLists + n) --> O(n)
+	// Complejidad temporal: O(nLists + m) --> O(n)
+	// Complejidad espacial: O(nLists) --> O(n)
 	private Lista[] randomSplitListas(Integer nLists) {
 		Lista[] result = new Lista[nLists];
 
@@ -56,7 +57,7 @@ public class Lista {
 
 		Item current = first;
 
-		// Recorro la lista original | O(n)
+		// Recorro la lista original | O(m)
 		while (current != null) {
 			int targetList = getRandom(nLists);
 

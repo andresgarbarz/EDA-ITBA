@@ -1,7 +1,9 @@
 package itba.andy.TP3.StackQueue;
 
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.function.BiFunction;
 
 public class EvaluatorPostfija {
 
@@ -108,35 +110,21 @@ public class EvaluatorPostfija {
 		String postfija = infijaToPostfija(sb.toString().trim());
 		this.scannerLine = new Scanner(postfija);
 
+		HashMap<String, BiFunction<Double, Double, Double>> operations = new HashMap<>();
+		operations.put("+", Double::sum);
+		operations.put("-", (a, b) -> a - b);
+		operations.put("*", (a, b) -> a * b);
+		operations.put("/", (a, b) -> a / b);
+		operations.put("^", Math::pow);
+
 		while (scannerLine.hasNext()) {
 			String token = scannerLine.next();
-			switch (token) {
-				case "+" -> {
-					Double b = auxi.pop();
-					Double a = auxi.pop();
-					auxi.push(a + b);
-				}
-				case "-" -> {
-					Double b = auxi.pop();
-					Double a = auxi.pop();
-					auxi.push(a - b);
-				}
-				case "*" -> {
-					Double b = auxi.pop();
-					Double a = auxi.pop();
-					auxi.push(a * b);
-				}
-				case "/" -> {
-					Double b = auxi.pop();
-					Double a = auxi.pop();
-					auxi.push(a / b);
-				}
-				case "^" -> {
-					Double b = auxi.pop();
-					Double a = auxi.pop();
-					auxi.push(Math.pow(a, b));
-				}
-				default -> auxi.push(Double.parseDouble(token));
+			if (operations.containsKey(token)) {
+				Double b = auxi.pop();
+				Double a = auxi.pop();
+				auxi.push(operations.get(token).apply(a, b));
+			} else {
+				auxi.push(Double.parseDouble(token));
 			}
 		}
 		return auxi.pop();
@@ -144,8 +132,7 @@ public class EvaluatorPostfija {
 
 	public static void main(String[] args) {
 		EvaluatorPostfija evaluator = new EvaluatorPostfija();
-		// String postfija = evaluator.infijaToPostfija("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^
-		// 3");
+//		 String postfija = evaluator.infijaToPostfija("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3");
 		Double rta = evaluator.evaluate();
 		System.out.println(rta);
 	}
