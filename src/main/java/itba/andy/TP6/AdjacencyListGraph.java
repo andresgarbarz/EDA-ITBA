@@ -67,11 +67,23 @@ abstract public class AdjacencyListGraph<V, E> implements GraphService<V, E> {
 
 	@Override
 	public int numberOfEdges() {
-		HashSet<InternalEdge> edges = new HashSet<>();
-		for (V vertex : getAdjacencyList().keySet()) {
-			edges.addAll(getAdjacencyList().get(vertex));
+		int count = 0;
+		if (isDirected) {
+			// Para grafos dirigidos, contamos todos los edges
+			for (Collection<InternalEdge> edges : getAdjacencyList().values()) {
+				count += edges.size();
+			}
+		} else {
+			// Para grafos no dirigidos, contamos cada edge solo una vez
+			HashSet<V> visited = new HashSet<>();
+			for (V vertex : getAdjacencyList().keySet()) {
+				if (!visited.contains(vertex)) {
+					count += getAdjacencyList().get(vertex).size();
+					visited.add(vertex);
+				}
+			}
 		}
-		return edges.size();
+		return count;
 	}
 
 	@Override
@@ -298,6 +310,19 @@ abstract public class AdjacencyListGraph<V, E> implements GraphService<V, E> {
 		protected boolean isEmpty() {
 			return queue.isEmpty();
 		}
+	}
+
+	// Parcial 2024 Q1 ej 2
+	public int getNRegular() {
+		if (!isSimple || acceptSelfLoop)
+			throw new RuntimeException("Graph not valid");
+
+		int degree = degree(getAdjacencyList().keySet().iterator().next());
+		for (V vertex : getAdjacencyList().keySet()) {
+			if (degree(vertex) != degree)
+				return -1;
+		}
+		return degree;
 	}
 
 	class InternalEdge {
